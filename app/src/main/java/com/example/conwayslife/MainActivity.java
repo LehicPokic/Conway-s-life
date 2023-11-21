@@ -3,6 +3,7 @@ package com.example.conwayslife;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     int valueSize = 5;
 
+    button_cell[][] button_cell;
+    button_cell[] Life_button_cell;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button buttonCreate = (Button) findViewById(R.id.button_create);
 
         TextView size = (TextView)findViewById(R.id.size);
+
+        size.setText(String.valueOf(5));
 
         SeekBar seekBar = (SeekBar)findViewById(R.id.seekBar);
 
@@ -68,13 +73,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @SuppressLint("ResourceType")
     public void drawField(int size) {
 
         LinearLayout linearLayoutMain = findViewById(R.id.mainlayout);
         linearLayoutMain.removeAllViews();
+        button_cell = new button_cell[size][size];
 
-        button_cell[][] button_cell = new button_cell[size][size];
-
+        Life_button_cell = new button_cell[size*size];
 
         for (int x = 0; x < size; x++){
             LinearLayout linearLayout = new LinearLayout(this);
@@ -88,7 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams
                         (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
                 button.setLayoutParams(layoutParamsButton);
-                button.setTag(x + "*" + y);
+                button.setTag(x + " " + y);
+                button.setBackgroundResource(R.drawable.button_false);
                 button_cell[x][y] = new button_cell();
                 button_cell[x][y].set_id(x, y);
                 button.setOnClickListener(this);
@@ -99,8 +106,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View button) {
-        TextView size = (TextView)findViewById(R.id.size);
-        size.setText(button.getTag().toString());
+        String xy = button.getTag().toString();
+        String[] XY = xy.split(" ");
+        int x = Integer.parseInt(XY[0]);
+
+        int y = Integer.parseInt(XY[1]);
+
+        button_cell[x][y].reverse_condition();
+        if (button_cell[x][y].get_condition() == true) {
+            button.setBackgroundResource(R.drawable.button_true);
+        }
+        else {
+            button.setBackgroundResource(R.drawable.button_false);
+        }
 
     }
 }

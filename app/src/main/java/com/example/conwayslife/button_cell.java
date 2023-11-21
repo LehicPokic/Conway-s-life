@@ -2,6 +2,8 @@ package com.example.conwayslife;
 
 public class button_cell {
     boolean condition;
+
+
     int id_x;
     int id_y;
     public button_cell() {
@@ -33,5 +35,14 @@ public class button_cell {
     public void set_id(int id_x, int id_y) {
         this.id_x = id_x;
         this.id_y = id_y;
+    }
+
+    public void reverse_condition() {
+        if (this.condition == true) {
+            this.condition = false;
+        }
+        else {
+            this.condition = true;
+        }
     }
 }
