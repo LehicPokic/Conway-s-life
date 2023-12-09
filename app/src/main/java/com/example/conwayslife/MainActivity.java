@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     int valueSize = 5;
-
+    boolean cheakClickButton = false;
     button_cell[][] first_generation;
 
     button_cell[][] next_generation;
@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                start();
+                if (cheakClickButton){
+                    start();
+                }
             }
         });
         buttonCreate.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
 
                 drawField(valueSize);
+                cheakClickButton = true;
+
             }
         });
 
@@ -141,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int x = Integer.parseInt(XY[0]);
 
         int y = Integer.parseInt(XY[1]);
-        
+
         first_generation[x][y].reverse_condition();
         if (first_generation[x][y].get_condition() == true) {
             button.setBackgroundResource(R.drawable.button_true);
